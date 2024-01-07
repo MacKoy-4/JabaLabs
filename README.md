@@ -1,5 +1,6 @@
 # JabaLabs
 Java lab works 2023-2024
+
 Якщо можна, передивіться ще будь-ласка оцінки за 1 та 2 лабораторні)
 
 [Lab 1](https://github.com/MacKoy-4/JabaLabs/blob/main/src/test/java/LabaTest1/LabaTest.java)
