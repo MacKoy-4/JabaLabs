@@ -1,36 +1,61 @@
 package org.program.Laba5;
 
+import org.program.Laba5.Exceptions.AccountNotFoundException;
+import org.program.Laba5.Exceptions.InsufficientFundsException;
+import org.program.Laba5.Exceptions.NegativeAmountException;
+
 import java.awt.image.BandCombineOp;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Bank {
     private List<BankAccount> Accounts;
 
-    public void CreateAccount(String accountName, double initialDeposit) {
-        if (accountName != null) {
-            BankAccount newAccount = new BankAccount(accountName, initialDeposit);
-        }
-        // исключение
+    public Bank() {
+        Accounts = new ArrayList<>();
     }
-    public BankAccount FindAccount(int accountNumber) {
-        BankAccount thisAccount = Accounts.get(accountNumber);
-        if (thisAccount != null) {
-            return thisAccount;
+    public BankAccount CreateAccount(String accountName, double initialDeposit) {
+        try {
+            int accountID = Accounts.size();
+            if (accountName != null && initialDeposit >= 0) {
+                BankAccount newAccount = new BankAccount(accountName, initialDeposit, accountID);
+                Accounts.add(newAccount);
+                return newAccount;
+            }
+        } catch (NegativeAmountException e) {
+            System.err.println(e.getMessage());
         }
         return null;
-        // исключение
     }
-    public boolean TransferMoney(int fromAccountNumber, int toAccountNumber, double amount) {
-        BankAccount fromAccount = Accounts.get(fromAccountNumber);
-        BankAccount toAccount = Accounts.get(toAccountNumber);
-        if (fromAccount == null || toAccount == null || amount == 0) {
-            return false;
+/*
+    private BankAccount GetAccountByID(int accountNumber) throws AccountNotFoundException {
+        if (accountNumber >= 0 && accountNumber < Accounts.size()) {
+            return Accounts.get(accountNumber);
+        } else {
+            throw new AccountNotFoundException("Account not found");
         }
-        if (fromAccount.GetBalance() >= amount) {
+    }
+*/
+    public BankAccount FindAccount(int accountNumber) throws AccountNotFoundException {
+        if (accountNumber >= 0 && accountNumber < Accounts.size()) {
+            return Accounts.get(accountNumber);
+        } else {
+            throw new AccountNotFoundException("Account not found");
+        }
+    }
+
+    public boolean TransferMoney(int fromAccountNumber, int toAccountNumber, double amount) {
+        try {
+            BankAccount fromAccount = this.FindAccount(fromAccountNumber);
+            BankAccount toAccount = this.FindAccount(toAccountNumber);
+
             fromAccount.Withdraw(amount);
             toAccount.Deposit(amount);
             return true;
+
+        } catch (AccountNotFoundException | NegativeAmountException | InsufficientFundsException e) {
+            System.err.println(e.getMessage());
+            return false;
         }
-        return false;
     }
 }

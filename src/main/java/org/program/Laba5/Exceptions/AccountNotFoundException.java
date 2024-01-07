@@ -1,7 +1,7 @@
 package org.program.Laba5.Exceptions;
 
-public class AccountNotFoundException {
-    public void NegativeAmountException(String message) {
+public class AccountNotFoundException extends Exception {
+    public AccountNotFoundException(String message) {
         super(message);
     }
 }
