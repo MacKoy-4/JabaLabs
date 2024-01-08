@@ -1,4 +1,4 @@
-# JabaLabs
+# JavaLabs
 Класс CinemaApp
 
 Конструктор:
