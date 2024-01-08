@@ -41,4 +41,20 @@ public class CinemaAppTest {
     void checkAvailability() {
         System.out.println(cinema.checkAvailability(0, 4));
     }
+
+    @Test
+    @Order(4)
+    void cancelBooking() {
+        int[] array = new int[SeatsCountGlobal];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = i;
+        }
+        cinema.cancelBooking(0, 0, array);
+    }
+
+    @Test
+    @Order(5)
+    void printSeatingArrangement2() {
+        cinema.printSeatingArrangement(0);
+    }
 }
