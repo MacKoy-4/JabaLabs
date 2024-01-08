@@ -1,4 +1,4 @@
-# JabaLabs
+# JavaLabs
 Класс BankAccount
 
 Конструктор:
